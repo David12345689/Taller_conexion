@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestión de Reservas</title>
+  <link rel="stylesheet" href="css/verecl.css" />
+</head>
+<body>
+  <h1>Gestión de Reservas</h1>
+
+  <section id="formulario">
+    <h2>Crear Reserva</h2>
+    <form id="reservaForm">
+      <input type="hidden" id="reservaId" />
+      <label>Cliente:
+        <select id="cliente_id" required></select>
+      </label>
+      <label>Vehículo:
+        <select id="vehiculo_id" required></select>
+      </label>
+      <label>Fecha inicio:
+        <input type="date" id="fecha_inicio" required />
+      </label>
+      <label>Fecha fin:
+        <input type="date" id="fecha_fin" required />
+      </label>
+      <button type="submit">Guardar</button>
+    </form>
+  </section>
+
+  <section id="tabla">
+    <h2>Reservas Registradas</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Vehículo</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="reservasBody"></tbody>
+    </table>
+  </section>
+
+  <script src="js/reservas.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestión de Vehículos</title>
+  <link rel="stylesheet" href="css/verecl.css" />
+</head>
+<body>
+  <h1>Gestión de Vehículos</h1>
+
+  <section id="formulario">
+    <h2>Registrar Vehículo</h2>
+    <form id="vehiculoForm">
+      <input type="hidden" id="vehiculoId" />
+      <label>Marca: <input type="text" id="marca" required /></label>
+      <label>Modelo: <input type="text" id="modelo" required /></label>
+      <label>Año: <input type="number" id="anio" min="1900" max="2099" required /></label>
+      <label>Categoría: <input type="text" id="categoria" /></label>
+      <label>
+        Estado:
+        <select id="estado">
+          <option value="disponible">Disponible</option>
+          <option value="alquilado">Alquilado</option>
+          <option value="mantenimiento">En mantenimiento</option>
+        </select>
+      </label>
+      <button type="submit">Guardar</button>
+    </form>
+  </section>
+
+  <section id="tabla">
+    <h2>Lista de Vehículos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Año</th>
+          <th>Categoría</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="vehiculosBody"></tbody>
+    </table>
+  </section>
+
+  <script src="js/vehiculos.js"></script>
+</body>
+</html>
