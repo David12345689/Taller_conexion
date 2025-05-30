@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de Vehículos</title>
+</head>
+<body>
+  <h1>Vehículos Registrados</h1>
+  <nav>
+    <a href="index.html">🏠 Volver al inicio</a>
+  </nav>
+
+  <label for="filtro">Filtrar por estado:</label>
+  <select id="filtro">
+    <option value="todos">Todos</option>
+    <option value="disponible">Disponible</option>
+    <option value="alquilado">Alquilado</option>
+    <option value="mantenimiento">Mantenimiento</option>
+  </select>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Año</th>
+        <th>Categoría</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-vehiculos">
+      
+    </tbody>
+  </table>
+
+  <script src="js/listar_vehiculos.js"></script>
+</body>
+</html>

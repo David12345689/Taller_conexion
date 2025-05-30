@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Reserva</title>
+</head>
+<body>
+  <h1>📅 Crear Reserva</h1>
+  <nav>
+    <a href="index.html">🏠 Volver al inicio</a>
+  </nav>
+
+  <form id="formulario">
+    <label for="cliente_id">Cliente:</label>
+    <select name="cliente_id" id="cliente_id" required></select>
+
+    <label for="vehiculo_id">Vehículo (disponible):</label>
+    <select name="vehiculo_id" id="vehiculo_id" required></select>
+
+    <label for="fecha_inicio">Fecha Inicio:</label>
+    <input type="date" name="fecha_inicio" required>
+
+    <label for="fecha_fin">Fecha Fin:</label>
+    <input type="date" name="fecha_fin" required>
+
+    <button type="submit">Guardar Reserva</button>
+  </form>
+
+  <div id="mensaje"></div>
+
+  <script src="js/reserva.js"></script>
+</body>
+</html>

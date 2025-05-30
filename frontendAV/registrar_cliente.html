@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Cliente</title>
+</head>
+<body>
+  <h1>Registrar Cliente</h1>
+  <nav>
+    <a href="index.html">🏠 Volver al inicio</a>
+  </nav>
+
+  <form id="form-cliente">
+    <label>Nombre: <input type="text" name="nombre" required></label><br>
+    <label>Teléfono: <input type="text" name="telefono" required></label><br>
+    <label>Correo: <input type="email" name="correo" required></label><br>
+    <label>Licencia: <input type="text" name="numero_licencia" required></label><br>
+    <button type="submit">Guardar Cliente</button>
+  </form>
+
+  <div id="cliente-mensaje"></div>
+
+  <!-- Cargar el script de cliente -->
+  <script src="js/cliente.js"></script>
+</body>
+</html>

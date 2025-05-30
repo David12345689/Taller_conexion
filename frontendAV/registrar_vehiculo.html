@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Vehículo</title>
+</head>
+<body>
+  <h1>🚙 Registrar Vehículo</h1>
+  <nav>
+    <a href="index.html">🏠 Volver al inicio</a>
+  </nav>
+
+  <form id="formulario">
+    <label for="categoria">Categoría:</label>
+    <select name="categoria" id="categoria" required>
+      <option value="">Seleccione una categoría</option>
+      <option value="Coche pequeño">Coche pequeño</option>
+      <option value="Coche mediano">Coche mediano</option>
+      <option value="Berlina">Berlina</option>
+      <option value="Familiar">Familiar</option>
+      <option value="SUV">SUV (4x4)</option>
+      <option value="Monovolumen">Coche de 6+ plazas</option>
+      <option value="Especial">Coche especial</option>
+    </select>
+
+    <label for="modelo">Modelo:</label>
+    <select name="modelo" id="modelo" required>
+      <option value="">Seleccione un modelo</option>
+    </select>
+
+    <label for="marca">Marca:</label>
+    <input type="text" name="marca" id="marca" readonly required>
+
+    <label for="anio">Año:</label>
+    <input type="number" name="anio" id="anio" readonly required>
+
+    <button type="submit">Registrar</button>
+  </form>
+
+  <div id="mensaje"></div>
+
+  <script src="js/vehiculo.js"></script>
+</body>
+</html>
