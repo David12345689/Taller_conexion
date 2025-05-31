@@ -63,4 +63,18 @@ class VehiculoController extends Controller
             'mensaje' => 'Vehículo eliminado correctamente.'
         ], 204);
     }
+
+    public function reparar($id)
+    {
+        $vehiculo = Vehiculo::findOrFail($id);
+
+        if ($vehiculo->estado !== 'mantenimiento') {
+            return response()->json(['mensaje' => 'El vehículo no está en mantenimiento.'], 400);
+        }
+
+        $vehiculo->estado = 'disponible';
+        $vehiculo->save();
+
+        return response()->json(['mensaje' => 'Vehículo reparado y ahora disponible.']);
+    }
 }

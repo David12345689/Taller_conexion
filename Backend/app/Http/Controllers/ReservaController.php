@@ -41,23 +41,21 @@ class ReservaController extends Controller
 
     public function finalizar($id)
     {
-        $reserva = Reserva::find($id);
+        $reserva = Reserva::findOrFail($id);
 
-        if (!$reserva) {
-            return response()->json(['error' => 'Reserva no encontrada'], 404);
+        if ($reserva->estado !== 'activa') {
+            return response()->json(['mensaje' => 'La reserva no está activa.'], 400);
         }
 
-        
         $reserva->estado = 'completada';
         $reserva->save();
 
-        
-        $vehiculo = $reserva->vehiculo;
+        $vehiculo = Vehiculo::find($reserva->vehiculo_id);
         if ($vehiculo) {
-            $vehiculo->estado = 'disponible';
+            $vehiculo->estado = 'mantenimiento'; // nuevo estado
             $vehiculo->save();
         }
 
-        return response()->json(['mensaje' => 'Reserva finalizada y vehículo liberado.']);
+        return response()->json(['mensaje' => 'Reserva finalizada. Vehículo en mantenimiento.']);
     }
 }

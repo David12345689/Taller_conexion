@@ -5,8 +5,9 @@ function cargarVehiculos() {
   fetch("http://localhost:8000/api/vehiculos")
     .then(res => res.json())
     .then(data => {
-      const estadoSeleccionado = filtro.value;
       let contador = 1;
+      const estadoSeleccionado = filtro.value;
+
       tabla.innerHTML = `
         <tr>
           <th>ID</th>
@@ -19,9 +20,12 @@ function cargarVehiculos() {
       `;
 
       data.forEach(vehiculo => {
+        const estadoVehiculo = vehiculo.estado?.toLowerCase().trim();
+        const estadoFiltro = estadoSeleccionado.toLowerCase().trim();
+
         if (
-          estadoSeleccionado === "Todos" ||
-          vehiculo.estado === estadoSeleccionado.toLowerCase()
+          estadoFiltro === "todos" ||
+          estadoVehiculo === estadoFiltro
         ) {
           tabla.innerHTML += `
             <tr>
@@ -36,8 +40,8 @@ function cargarVehiculos() {
         }
       });
     })
-    .catch(err => {
-      tabla.innerHTML = `<tr><td colspan="6">Error al cargar vehículos</td></tr>`;
+    .catch(() => {
+      tabla.innerHTML = `<tr><td colspan="6">❌ Error al cargar vehículos</td></tr>`;
     });
 }
 
