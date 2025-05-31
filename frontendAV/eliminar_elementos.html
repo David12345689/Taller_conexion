@@ -7,10 +7,12 @@
 </head>
 <body>
   <h1>🗑️ Eliminar Vehículos y Clientes</h1>
-  <a href="index.html">🏠 Volver al inicio</a>
+  <nav>
+    <a href="index.html">🏠 Volver al inicio</a>
+  </nav>
 
   <h2>Vehículos</h2>
-  <table id="tablaVehiculos">
+  <table>
     <thead>
       <tr>
         <th>ID</th>
@@ -22,23 +24,29 @@
         <th>Acción</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="tablaVehiculosEliminar">
+    
+    </tbody>
   </table>
 
   <h2>Clientes</h2>
-  <table id="tablaClientes">
+  <table>
     <thead>
       <tr>
+        <th>ID</th>
         <th>Nombre</th>
         <th>Teléfono</th>
         <th>Correo</th>
-        <th>Número de licencia</th>
+        <th>Licencia</th>
         <th>Acción</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="tablaClientesEliminar">
+     
+    </tbody>
   </table>
 
+  
   <script src="js/eliminar_elementos.js"></script>
 </body>
 </html>

@@ -1,44 +1,113 @@
-const tabla = document.getElementById("tabla-historial");
-const filtro = document.getElementById("filtro-historial");
+class ReservaHistorial {
+  constructor({ id, cliente_id, vehiculo_id, fecha_inicio, fecha_fin, estado }) {
+    this.id          = id;
+    this.cliente_id  = cliente_id;
+    this.vehiculo_id = vehiculo_id;
+    this.fecha_inicio = fecha_inicio;
+    this.fecha_fin   = fecha_fin;
+    this.estado      = estado;
+  }
 
-let clientes = {};
-let vehiculos = {};
-
-Promise.all([
-  fetch("http://localhost:8000/api/clientes").then(res => res.json()),
-  fetch("http://localhost:8000/api/vehiculos").then(res => res.json())
-]).then(([clientesData, vehiculosData]) => {
-  clientesData.forEach(c => clientes[c.id] = c.nombre);
-  vehiculosData.forEach(v => vehiculos[v.id] = `${v.marca} ${v.modelo}`);
-
-  cargarHistorial();
-});
-
-function cargarHistorial(filtroEstado = "todos") {
-  fetch("http://localhost:8000/api/reservas")
-    .then(res => res.json())
-    .then(reservas => {
-      tabla.innerHTML = "";
-
-      reservas
-        .filter(r => {
-          if (filtroEstado === "todos") return true;
-          return r.estado?.trim().toLowerCase() === filtroEstado;
-        })
-        .forEach(r => {
-          const fila = document.createElement("tr");
-          fila.innerHTML = `
-            <td>${r.id}</td>
-            <td>${clientes[r.cliente_id] || r.cliente_id}</td>
-            <td>${vehiculos[r.vehiculo_id] || r.vehiculo_id}</td>
-            <td>${r.fecha_inicio} → ${r.fecha_fin}</td>
-            <td>${r.estado}</td>
-          `;
-          tabla.appendChild(fila);
-        });
-    });
+  generarFilaHTML(nombreCliente, modeloVehiculo) {
+    return `
+      <tr>
+        <td>${this.id}</td>
+        <td>${nombreCliente}</td>
+        <td>${modeloVehiculo}</td>
+        <td>${this.fecha_inicio}</td>
+        <td>${this.fecha_fin}</td>
+        <td>${this.estado}</td>
+      </tr>
+    `;
+  }
 }
 
-filtro.addEventListener("change", () => {
-  cargarHistorial(filtro.value);
+class GestorHistorialReservas {
+  constructor(apiUrl, filtroId, tbodyId) {
+    this.apiUrl       = apiUrl;
+    this.filtro       = document.getElementById(filtroId);
+    this.tbody        = document.getElementById(tbodyId);
+    this.clientesMap  = {};
+    this.vehiculosMap = {};
+    this.reservas     = [];
+  }
+
+  async cargarClientesYVehiculos() {
+    try {
+      const [resClientes, resVehiculos] = await Promise.all([
+        fetch("http://localhost:8000/api/clientes"),
+        fetch("http://localhost:8000/api/vehiculos")
+      ]);
+      if (!resClientes.ok || !resVehiculos.ok) throw new Error("Error cargando datos");
+      const clientesData  = await resClientes.json();
+      const vehiculosData = await resVehiculos.json();
+
+      
+      clientesData.forEach(c => { this.clientesMap[c.id] = c.nombre; });
+      vehiculosData.forEach(v => { this.vehiculosMap[v.id] = v.modelo; });
+    } catch (err) {
+      console.error("cargarClientesYVehiculos:", err);
+      this.clientesMap = {};
+      this.vehiculosMap = {};
+    }
+  }
+
+  async cargarReservas() {
+    try {
+      const resp = await fetch(this.apiUrl);
+      if (!resp.ok) throw new Error("Error cargando reservas");
+      const datos = await resp.json();
+      this.reservas = datos.map(r => new ReservaHistorial(r));
+    } catch (err) {
+      console.error("cargarReservas:", err);
+      this.reservas = [];
+    }
+  }
+
+  filtrarReserva(reserva) {
+    const filtroVal = this.filtro.value.toLowerCase().trim();
+    if (filtroVal === "todos") return true;
+    return reserva.estado.toLowerCase().trim() === filtroVal;
+  }
+
+  mostrarHistorial() {
+    this.tbody.innerHTML = "";
+    this.reservas
+      .filter(r => this.filtrarReserva(r))
+      .forEach(r => {
+        const nombreCliente    = this.clientesMap[r.cliente_id]  || "Desconocido";
+        const modeloVehiculo   = this.vehiculosMap[r.vehiculo_id] || "Desconocido";
+        this.tbody.innerHTML += r.generarFilaHTML(nombreCliente, modeloVehiculo);
+      });
+
+    if (this.tbody.innerHTML.trim() === "") {
+      this.tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align:center; padding:1em;">
+            No hay reservas que mostrar.
+          </td>
+        </tr>
+      `;
+    }
+  }
+
+  iniciarEventos() {
+    this.filtro.addEventListener("change", () => this.mostrarHistorial());
+  }
+
+  async iniciar() {
+    await this.cargarClientesYVehiculos();
+    await this.cargarReservas();
+    this.iniciarEventos();
+    this.mostrarHistorial();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const gestor = new GestorHistorialReservas(
+    "http://localhost:8000/api/reservas",
+    "filtro-historial",
+    "tabla-historial"
+  );
+  gestor.iniciar();
 });

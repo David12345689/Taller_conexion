@@ -6,22 +6,34 @@
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <h1>Registrar Cliente</h1>
+  <h1>🧑 Registrar Cliente</h1>
   <nav>
     <a href="index.html">🏠 Volver al inicio</a>
   </nav>
 
-  <form id="form-cliente">
-    <label>Nombre: <input type="text" name="nombre" required></label><br>
-    <label>Teléfono: <input type="text" name="telefono" required></label><br>
-    <label>Correo: <input type="email" name="correo" required></label><br>
-    <label>Licencia: <input type="text" name="numero_licencia" required></label><br>
+  <!-- 1) Aquí quitamos cualquier action="" o method="get" -->
+  <form id="clienteForm">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" name="telefono" required>
+
+    <label for="correo">Correo:</label>
+    <input type="email" id="correo" name="correo">
+
+    <label for="licencia">Número de licencia:</label>
+    <input type="text" id="licencia" name="numero_licencia">
+
+    <!-- hidden para edición, pero de momento está vacío -->
+    <input type="hidden" id="clienteId" value="">
+
     <button type="submit">Guardar Cliente</button>
   </form>
 
   <div id="cliente-mensaje"></div>
 
-  <!-- Cargar el script de cliente -->
+  <!-- 2) Asegúrate de que aquí cargas tu JS POO -->
   <script src="js/cliente.js"></script>
 </body>
 </html>

@@ -6,31 +6,32 @@
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <h1>📚 Historial de Reservas</h1>
+  <h1>📋 Historial de Reservas</h1>
   <nav>
     <a href="index.html">🏠 Volver al inicio</a>
   </nav>
 
-  <label>Filtrar por estado:
-    <select id="filtro-historial">
-      <option value="todos">Todos</option>
-      <option value="activa">Activa</option>
-      <option value="completada">Completada</option>
-      <option value="cancelada">Cancelada</option>
-    </select>
-  </label>
+  <label for="filtro-historial">Filtrar estado:</label>
+  <select id="filtro-historial">
+    <option value="todos">Todos</option>
+    <option value="activa">Activa</option>
+    <option value="completada">Completada</option>
+    <option value="cancelada">Cancelada</option>
+  </select>
 
-  <table border="1">
+  <table>
     <thead>
       <tr>
         <th>ID</th>
         <th>Cliente</th>
         <th>Vehículo</th>
-        <th>Fechas</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
         <th>Estado</th>
       </tr>
     </thead>
-    <tbody id="tabla-historial"></tbody>
+    <tbody id="tabla-historial">
+    </tbody>
   </table>
 
   <script src="js/historial_reservas.js"></script>
